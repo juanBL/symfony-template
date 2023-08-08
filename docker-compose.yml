@@ -11,11 +11,11 @@ services:
     environment:
       APP_ENV: dev
     volumes:
-      - php_socket:/var/run/php
+      - rviewer-php_socket:/var/run/php
       - ./:/srv/app:rw
       - ./docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
     networks:
-      skeleton-php-symfony-net:
+      rviewer-skeleton-php-symfony-net:
   
   caddy:
     image: caddy:2-alpine
@@ -25,21 +25,23 @@ services:
       HTTP_PORT: 8080
     restart: unless-stopped
     volumes:
-      - php_socket:/var/run/php
+      - rviewer-php_socket:/var/run/php
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./public:/srv/app/public:ro
     ports:
       - "8080:8080"
     networks:
-      skeleton-php-symfony-net:
-        
+      rviewer-skeleton-php-symfony-net:
+  
+  
+  
   skeleton-php-symfony-postgres:
     container_name: skeleton-php-symfony-postgres
     image: postgres:14-alpine
     env_file:
       - .env
     volumes:
-      - skeleton-php-symfony-postgres-volume:/var/lib/postgresql/data:rw
+      - rviewer-skeleton-php-symfony-postgres-volume:/var/lib/postgresql/data:rw
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 10s
@@ -48,12 +50,12 @@ services:
     ports:
       - "5432:5432"
     networks:
-      skeleton-php-symfony-net:
-        
+      rviewer-skeleton-php-symfony-net:
+
 volumes:
-  php_socket:
-  skeleton-php-symfony-postgres-volume:
+  rviewer-php_socket:
+  rviewer-skeleton-php-symfony-postgres-volume:
 
 networks:
-  skeleton-php-symfony-net:
-    name: skeleton-php-symfony-net
+  rviewer-skeleton-php-symfony-net:
+    name: rviewer-skeleton-php-symfony-net
