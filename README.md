@@ -31,6 +31,16 @@ You can either:
 This repository is a PHP skeleton with Symfony & PostgreSQL designed for quickly getting started developing an API.
 Check the [Getting Started](#getting-started) for full details.
 
+## Coverage
+
+![coverage.png](doc/coverage.png)
+
+## DB
+
+![db.png](doc/db.png)
+
+
+
 ## Technologies
 
 * [PHP 8.1](https://www.php.net/releases/8.1/en.php)
