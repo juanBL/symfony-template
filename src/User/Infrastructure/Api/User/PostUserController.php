@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Api\User;
 
+use OpenApi\Attributes as OA;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Infrastructure\Symfony\ApiController;
 use App\Shared\Infrastructure\Symfony\ApiExceptionsHttpStatusCodeMapping;
@@ -26,6 +27,46 @@ class PostUserController extends ApiController
         parent::__construct($exceptionHandler);
     }
 
+    #[OA\Post(
+        description: "This call creates a new user.",
+        summary: "Create a new user.",
+        requestBody: new OA\RequestBody(
+            description: "User information",
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(
+                        property: 'name',
+                        description: 'User name',
+                        type: 'string',
+                        example: 'juan'
+                    )
+                ]
+            )
+        ),
+        tags: ["User"],
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'User created successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'id',
+                            type: 'string',
+                            example: 'c25ca0b3-c558-488f-b997-784ff7bb7e13'
+                        ),
+                        new OA\Property(
+                            property: 'name',
+                            type: 'string',
+                            example: 'juan'
+                        )
+                    ],
+                    type: 'object'
+                )
+            )
+        ]
+    )]
     public function __invoke(Request $request): JsonResponse
     {
         $userId = Uuid::random()->value();

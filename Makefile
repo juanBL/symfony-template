@@ -45,3 +45,6 @@ migration-migrate:
 
 static-analysis:
 	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm ./vendor/bin/phpstan analyse -c phpstan.neon
+
+install-assets:
+	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm php bin/console  assets:install -q

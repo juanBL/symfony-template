@@ -9,7 +9,7 @@ use App\Shared\Infrastructure\Symfony\ApiController;
 use App\Shared\Infrastructure\Symfony\ApiExceptionsHttpStatusCodeMapping;
 use App\User\Application\Command\CreateUserGroupCommand;
 use App\User\Domain\Repository\Exceptions\UserAlreadyExistException;
-use InvalidArgumentException;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +26,25 @@ class PostUserGroupController extends ApiController
         parent::__construct($exceptionHandler);
     }
 
+    #[OA\Post(
+        description: "This call creates a new user group.",
+        summary: "Create a new user group.",
+        tags: ["User"],
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'User created successfully'
+            )
+        ]
+    )]
     public function __invoke(string $userId, string $groupId, Request $request): JsonResponse
     {
         $userGroupId = Uuid::random()->value();
 
         $this->handle(new CreateUserGroupCommand($userGroupId, $userId, $groupId));
 
-        return $this->json([], Response::HTTP_CREATED, ['location' => sprintf('/users/%s/groups/%s', $userId, $groupId)]);
+        return $this->json([], Response::HTTP_CREATED, ['location' => sprintf('/users/%s/groups/%s', $userId, $groupId)]
+        );
     }
 
     /**
