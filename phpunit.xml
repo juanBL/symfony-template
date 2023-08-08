@@ -36,6 +36,7 @@
 
         <exclude>
             <directory suffix=".php">src/Shared</directory>
+            <directory suffix=".php">src/*/Infrastructure</directory>
         </exclude>
     </coverage>
 </phpunit>

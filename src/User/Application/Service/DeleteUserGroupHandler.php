@@ -13,11 +13,11 @@ use App\User\Domain\Repository\Exceptions\DatabaseUserGroupRepositoryException;
 use App\User\Domain\Repository\Exceptions\DatabaseUserRepositoryException;
 use App\User\Domain\Repository\Exceptions\UserGroupNotFoundException;
 use App\User\Domain\Repository\GroupRepositoryInterface;
+use App\User\Domain\Repository\UserGroupRepositoryInterface;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use App\User\Domain\Service\GroupFinder;
 use App\User\Domain\Service\UserFinder;
 use App\User\Domain\Service\UserGroupByUserAndGroupSearcher;
-use App\User\Infrastructure\Repository\UserGroupRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class DeleteUserGroupHandler implements MessageHandlerInterface
@@ -27,7 +27,7 @@ final class DeleteUserGroupHandler implements MessageHandlerInterface
     private UserGroupByUserAndGroupSearcher $searcher;
 
     public function __construct(
-        private readonly UserGroupRepository $repository,
+        private readonly UserGroupRepositoryInterface $repository,
         UserRepositoryInterface $userRepository,
         GroupRepositoryInterface $groupRepository,
     ) {
