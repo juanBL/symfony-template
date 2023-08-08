@@ -47,4 +47,7 @@ static-analysis:
 	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm ./vendor/bin/phpstan analyse -c phpstan.neon
 
 install-assets:
-	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm php bin/console  assets:install -q
+	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm php bin/console assets:install -q
+
+api-doc-json:
+	docker compose -f docker-compose.yml run skeleton-php-symfony-fpm php bin/console nelmio:apidoc:dump --format=json --no-pretty > public-api.json
