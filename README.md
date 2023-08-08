@@ -39,6 +39,10 @@ Check the [Getting Started](#getting-started) for full details.
 
 ![db.png](doc/db.png)
 
+## API DOC
+
+[public-api.json](public-api.json)
+
 
 
 ## Technologies
